@@ -824,6 +824,81 @@
             color: var(--navy);
         }
 
+        /* ── carousel styles ── */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            margin: 16px 0 24px;
+            border-radius: var(--radius);
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            padding: 16px 0;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 0 16px;
+        }
+        .carousel-slide .product-card {
+            margin: 0;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 999px;
+            width: 44px;
+            height: 44px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+            transition: background var(--transition);
+            opacity: 0.8;
+        }
+        .carousel-btn:hover {
+            background: var(--gold);
+            opacity: 1;
+        }
+        .carousel-btn.prev {
+            left: 8px;
+        }
+        .carousel-btn.next {
+            right: 8px;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .carousel-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--gray-300);
+            cursor: pointer;
+            transition: background var(--transition), transform var(--transition);
+        }
+        .carousel-dots span.active {
+            background: var(--gold);
+            transform: scale(1.2);
+        }
+
         /* ── pagination ── */
         .pagination-wrap {
             display: flex;
@@ -969,6 +1044,9 @@
             .banner-row {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .carousel-slide {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         @media (max-width: 840px) {
             body {
@@ -1025,6 +1103,14 @@
             }
             .pagination-controls {
                 justify-content: center;
+            }
+            .carousel-slide {
+                grid-template-columns: 1fr;
+            }
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
             }
         }
         @media (max-width: 520px) {
@@ -1197,9 +1283,20 @@
         <div class="video-ads" id="video-ads-row"></div>
     </section>
 
-    <!-- ═══ PRODUCTS ═══ -->
+    <!-- ═══ CARROUSEL PRODUITS VEDETTES ═══ -->
+    <section class="container section-spacer" id="featured">
+        <h2 class="section-title">En vedette <small>· coups de cœur</small></h2>
+        <div class="carousel-container" id="featured-carousel">
+            <div class="carousel-track" id="carousel-track"></div>
+            <button class="carousel-btn prev" id="carousel-prev">‹</button>
+            <button class="carousel-btn next" id="carousel-next">›</button>
+            <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+    </section>
+
+    <!-- ═══ PRODUCTS (grille paginée) ═══ -->
     <section class="container section-spacer" id="deals">
-        <h2 class="section-title" id="products">Produits <small>· toute la collection</small></h2>
+        <h2 class="section-title" id="products">Tous les produits <small>· catalogue complet</small></h2>
         <div class="filter-panel" id="filter-panel">
             <div class="filter-group">
                 <label for="size-filter">Taille</label>
@@ -1268,11 +1365,11 @@
             "products": [
                 { "id": "p1", "name": "T-shirt FilsBantou", "price": 15, "image": "T-shirt.jpeg", "description": "T-shirt premium en coton bio, coupe régulière.", "category": "T-shirts", "collection": "Street", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"]},
                 { "id": "p2", "name": "Pull Over FilsBantou", "price": 17, "image": "pull.jpeg", "description": "Pull confortable, doublure polaire, coupe moderne.", "category": "Pulls", "collection": "Hiver", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"] },
-                { "id": "p3", "name": "Chapeau FilsBantou", "price": 5, "image": "C1.jpeg", "description": "Chapeau", "category": "Chapeaux", "collection": "Urbain", "sizes": ["Unique"], "colors": ["Noir", "Rouge", "Bleu"] },
-                { "id": "p4", "name": "Kagoule FilsBantou", "price": 20, "image": "k4.jpeg", "description": "Kagoule chaude, doublure polaire, capuche ajustable.", "category": "Kagoules", "collection": "Hiver", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"] }
+                { "id": "p3", "name": "Chapeau FilsBantou", "price": 5, "image": "C1.jpeg", "description": "Chapeau tendance, ajustable.", "category": "Chapeaux", "collection": "Urbain", "sizes": ["Unique"], "colors": ["Noir", "Rouge", "Bleu"] },
+                { "id": "p4", "name": "Kagoule FilsBantou", "price": 20, "image": "k4.jpeg", "description": "Kagoule chaude, doublure polaire, capuche ajustable.", "category": "Kagoules", "collection": "Hiver", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"] },
                 { "id": "p5", "name": "T-shirt FilsBantou", "price": 15, "image": "T-shirt.jpeg", "description": "T-shirt premium en coton bio, coupe régulière.", "category": "T-shirts", "collection": "Street", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"]},
                 { "id": "p6", "name": "Pull Over FilsBantou", "price": 17, "image": "pull.jpeg", "description": "Pull confortable, doublure polaire, coupe moderne.", "category": "Pulls", "collection": "Hiver", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"] },
-                { "id": "p7", "name": "Chapeau FilsBantou", "price": 5, "image": "C1.jpeg", "description": "Chapeau", "category": "Chapeaux", "collection": "Urbain", "sizes": ["Unique"], "colors": ["Noir", "Rouge", "Bleu"] },
+                { "id": "p7", "name": "Chapeau FilsBantou", "price": 5, "image": "C1.jpeg", "description": "Chapeau tendance, ajustable.", "category": "Chapeaux", "collection": "Urbain", "sizes": ["Unique"], "colors": ["Noir", "Rouge", "Bleu"] },
                 { "id": "p8", "name": "Kagoule FilsBantou", "price": 20, "image": "k4.jpeg", "description": "Kagoule chaude, doublure polaire, capuche ajustable.", "category": "Kagoules", "collection": "Hiver", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "colors": ["Noir", "Blanc", "Rouge", "Bleu", "Vert", "Jaune", "Violet", "Rose"] }
             ]
         }
@@ -1320,6 +1417,12 @@
             const pagePrev = document.getElementById('page-prev');
             const pageNext = document.getElementById('page-next');
 
+            // ── carousel refs ──
+            const carouselTrack = document.getElementById('carousel-track');
+            const carouselPrev = document.getElementById('carousel-prev');
+            const carouselNext = document.getElementById('carousel-next');
+            const carouselDots = document.getElementById('carousel-dots');
+
             // ── state ──
             let activeCategory = 'Tout';
             let activeCollection = 'Toutes';
@@ -1330,6 +1433,12 @@
             let currentPage = 1;
             const itemsPerPage = 6;
             let toastTimeout = null;
+
+            // Carousel state
+            let featuredProducts = [];
+            let currentSlide = 0;
+            let slideCount = 0;
+            let autoSlideInterval = null;
 
             // ── helpers ──
             function getSearchQuery() {
@@ -1538,7 +1647,6 @@
                     }
                     if (pages[pages.length - 1] < totalPages - 1) pages.push('…');
                     pages.push(totalPages);
-                    // ensure we have no duplicates
                     pages = pages.filter((v, i, a) => a.indexOf(v) === i);
                 }
 
@@ -1547,7 +1655,7 @@
                         const span = document.createElement('span');
                         span.textContent = '…';
                         span.style.cssText =
-                        'padding:0 6px;color:var(--gray-600);display:flex;align-items:center;';
+                            'padding:0 6px;color:var(--gray-600);display:flex;align-items:center;';
                         pageNumbers.appendChild(span);
                         return;
                     }
@@ -1560,7 +1668,6 @@
                         currentPage = p;
                         renderPagination();
                         renderProducts();
-                        // scroll to products grid
                         productsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     });
                     pageNumbers.appendChild(btn);
@@ -1585,7 +1692,50 @@
                 };
             }
 
-            // ── render products ──
+            // ── render product card (shared) ──
+            function renderProductCard(product) {
+                const sizeOpts = product.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
+                const colorOpts = product.colors.map(c => `<option value="${c}">${c}</option>`).join('');
+                const qtyOpts = Array.from({ length: 10 }, (_, i) =>
+                    `<option value="${i+1}">${i+1}</option>`
+                ).join('');
+                return `
+                    <article class="product-card">
+                        <div class="image-wrap">
+                            <img loading="lazy" src="${product.image}" alt="${product.name}" />
+                            <span class="badge-top">${product.category}</span>
+                        </div>
+                        <div class="product-body">
+                            <h3>${product.name}</h3>
+                            <p class="desc">${product.description}</p>
+                            <div class="product-meta">
+                                <span class="price">${product.price.toFixed(2)} $</span>
+                                <span class="collection-badge">${product.collection}</span>
+                            </div>
+                            <div class="product-variants">
+                                <select id="size-${product.id}" class="variant-size">
+                                    ${sizeOpts}
+                                </select>
+                                <select id="color-${product.id}" class="variant-color">
+                                    ${colorOpts}
+                                </select>
+                                <div class="qty-wrap">
+                                    <select id="qty-${product.id}" class="variant-qty">
+                                        ${qtyOpts}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="add-btn" data-id="${product.id}">
+                                    ➕ Ajouter au panier
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+
+            // ── render products (grid) ──
             function renderProducts() {
                 const { items, start, end } = getCurrentPageItems();
 
@@ -1599,47 +1749,7 @@
                     return;
                 }
 
-                productsGrid.innerHTML = items.map(p => {
-                    const sizeOpts = p.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
-                    const colorOpts = p.colors.map(c => `<option value="${c}">${c}</option>`).join('');
-                    const qtyOpts = Array.from({ length: 10 }, (_, i) =>
-                        `<option value="${i+1}">${i+1}</option>`
-                    ).join('');
-                    return `
-                        <article class="product-card">
-                            <div class="image-wrap">
-                                <img loading="lazy" src="${p.image}" alt="${p.name}" />
-                                <span class="badge-top">${p.category}</span>
-                            </div>
-                            <div class="product-body">
-                                <h3>${p.name}</h3>
-                                <p class="desc">${p.description}</p>
-                                <div class="product-meta">
-                                    <span class="price">${p.price.toFixed(2)} $</span>
-                                    <span class="collection-badge">${p.collection}</span>
-                                </div>
-                                <div class="product-variants">
-                                    <select id="size-${p.id}" class="variant-size">
-                                        ${sizeOpts}
-                                    </select>
-                                    <select id="color-${p.id}" class="variant-color">
-                                        ${colorOpts}
-                                    </select>
-                                    <div class="qty-wrap">
-                                        <select id="qty-${p.id}" class="variant-qty">
-                                            ${qtyOpts}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="product-actions">
-                                    <button class="add-btn" data-id="${p.id}">
-                                        ➕ Ajouter au panier
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                    `;
-                }).join('');
+                productsGrid.innerHTML = items.map(p => renderProductCard(p)).join('');
 
                 // bind add buttons
                 productsGrid.querySelectorAll('.add-btn').forEach(btn => {
@@ -1663,6 +1773,132 @@
                         }, 1200);
                     });
                 });
+            }
+
+            // ── carousel logic ──
+            function initCarousel() {
+                // take first 6 products as featured (or all if less)
+                featuredProducts = shopData.products.slice(0, 6);
+                if (featuredProducts.length === 0) {
+                    document.getElementById('featured').style.display = 'none';
+                    return;
+                }
+
+                // determine slides: 3 per slide on large, 2 on tablet, 1 on mobile
+                const getItemsPerSlide = () => {
+                    const w = window.innerWidth;
+                    if (w < 600) return 1;
+                    if (w < 1024) return 2;
+                    return 3;
+                };
+
+                const itemsPerSlide = getItemsPerSlide();
+                const totalItems = featuredProducts.length;
+                slideCount = Math.ceil(totalItems / itemsPerSlide);
+
+                // build slides
+                let slidesHtml = '';
+                for (let i = 0; i < slideCount; i++) {
+                    const start = i * itemsPerSlide;
+                    const end = Math.min(start + itemsPerSlide, totalItems);
+                    const slideProducts = featuredProducts.slice(start, end);
+                    slidesHtml += `<div class="carousel-slide">${slideProducts.map(p => renderProductCard(p)).join('')}</div>`;
+                }
+                carouselTrack.innerHTML = slidesHtml;
+
+                // bind add buttons inside carousel
+                carouselTrack.querySelectorAll('.add-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const id = this.dataset.id;
+                        const qtyEl = document.getElementById(`qty-${id}`);
+                        const sizeEl = document.getElementById(`size-${id}`);
+                        const colorEl = document.getElementById(`color-${id}`);
+                        const qty = qtyEl ? parseInt(qtyEl.value, 10) : 1;
+                        const size = sizeEl ? sizeEl.value : 'Unique';
+                        const color = colorEl ? colorEl.value : 'Standard';
+                        addToCart(id, qty, size, color);
+
+                        const original = this.textContent;
+                        this.textContent = '✅ Ajouté !';
+                        this.classList.add('added');
+                        setTimeout(() => {
+                            this.textContent = original;
+                            this.classList.remove('added');
+                        }, 1200);
+                    });
+                });
+
+                // dots
+                carouselDots.innerHTML = '';
+                for (let i = 0; i < slideCount; i++) {
+                    const dot = document.createElement('span');
+                    if (i === 0) dot.classList.add('active');
+                    dot.dataset.index = i;
+                    dot.addEventListener('click', () => goToSlide(i));
+                    carouselDots.appendChild(dot);
+                }
+
+                // navigation
+                carouselPrev.addEventListener('click', () => goToSlide(currentSlide - 1));
+                carouselNext.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+                // set initial position
+                goToSlide(0);
+
+                // start auto-slide
+                startAutoSlide();
+
+                // update on resize
+                let resizeTimer;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        // re-build carousel with new items per slide
+                        const newItemsPerSlide = getItemsPerSlide();
+                        const oldItemsPerSlide = Math.ceil(featuredProducts.length / slideCount) || 3;
+                        if (newItemsPerSlide !== oldItemsPerSlide) {
+                            // rebuild
+                            const track = carouselTrack;
+                            const slides = track.querySelectorAll('.carousel-slide');
+                            // we can just re-init
+                            const currentIndex = currentSlide;
+                            initCarousel();
+                            // try to restore same slide index
+                            if (currentIndex < slideCount) goToSlide(currentIndex);
+                        }
+                    }, 300);
+                });
+            }
+
+            function goToSlide(index) {
+                if (slideCount === 0) return;
+                if (index < 0) index = slideCount - 1;
+                if (index >= slideCount) index = 0;
+                currentSlide = index;
+                const offset = -currentSlide * 100;
+                carouselTrack.style.transform = `translateX(${offset}%)`;
+
+                // update dots
+                const dots = carouselDots.querySelectorAll('span');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            function startAutoSlide() {
+                if (autoSlideInterval) clearInterval(autoSlideInterval);
+                if (slideCount > 1) {
+                    autoSlideInterval = setInterval(() => {
+                        goToSlide(currentSlide + 1);
+                    }, 4000);
+                }
+            }
+
+            function stopAutoSlide() {
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = null;
+                }
             }
 
             // ── cart logic ──
@@ -1728,7 +1964,6 @@
                     </div>
                 `).join('');
 
-                // bind cart actions
                 cartItems.querySelectorAll('[data-action]').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         const action = this.dataset.action;
@@ -1786,6 +2021,9 @@
                 renderCart();
                 updateCartBadge();
 
+                // init carousel after products are rendered
+                initCarousel();
+
                 // ── events ──
                 searchButton.addEventListener('click', doSearch);
                 searchInput.addEventListener('keyup', e => { if (e.key === 'Enter') doSearch(); });
@@ -1809,19 +2047,16 @@
                 orderButton.addEventListener('click', orderCart);
                 mobileMenuToggle.addEventListener('click', toggleMobileMenu);
 
-                // responsive: hide mobile nav on link click
                 document.querySelectorAll('.mobile-nav a').forEach(a => {
                     a.addEventListener('click', () => {
                         if (mobileNavLinks) mobileNavLinks.classList.add('hidden');
                     });
                 });
 
-                // close cart on escape
                 document.addEventListener('keydown', e => {
                     if (e.key === 'Escape') toggleCart(false);
                 });
 
-                // handle window resize for header
                 const handleResize = () => {
                     const isMobile = window.innerWidth <= 840;
                     document.querySelector('.desktop-header').classList.toggle('hidden', isMobile);
@@ -1829,6 +2064,11 @@
                 };
                 window.addEventListener('resize', handleResize);
                 handleResize();
+
+                // stop auto-slide when user hovers carousel
+                const carouselContainer = document.getElementById('featured-carousel');
+                carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+                carouselContainer.addEventListener('mouseleave', startAutoSlide);
             }
 
             // ── start ──
